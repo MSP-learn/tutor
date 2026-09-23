@@ -70,16 +70,16 @@ try {
   await rm(validRoot, { recursive: true, force: true });
 }
 
-const fixturePath = path.join(repositoryRoot, 'src/content/docs/__phase2-missing-description.md');
+const fixturePath = path.join(repositoryRoot, 'src/content/docs/phase2-missing-description.md');
 try {
   await writeFile(fixturePath, '---\ntitle: Invalid fixture\n---\n\nThis fixture must be rejected by the Starlight schema.\n');
-  const result = spawnSync(process.execPath, ['node_modules/astro/astro.js', 'build'], {
+  const result = spawnSync(process.execPath, ['node_modules/astro/bin/astro.mjs', 'build'], {
     cwd: repositoryRoot,
     env: { ...process.env, ASTRO_TELEMETRY_DISABLED: '1' },
     encoding: 'utf8',
   });
   const output = `${result.stdout}${result.stderr}`;
-  if (result.status === 0 || !output.includes('__phase2-missing-description.md') || !output.includes('description')) {
+  if (result.status === 0 || !output.includes('phase2-missing-description.md') || !output.includes('description')) {
     throw new Error(`invalid frontmatter was not reported with a file and field:\n${output}`);
   }
   console.log('PASS invalid frontmatter: source file and description field reported');

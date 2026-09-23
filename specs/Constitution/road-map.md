@@ -25,16 +25,17 @@ Each phase should end with a usable result, focused tests, and updated contribut
 
 **Exit:** A merge to the default branch publishes a readable, searchable example page to GitHub Pages.
 
-## Phase 2: Pull-request content checks
+## Phase 2: Pull-request content checks — complete
 
 **Goal:** Prevent invalid content from reaching the site.
 
 - Define the minimal tutorial frontmatter schema.
 - Add Markdown linting.
-- Check local links, anchors, and image paths.
+- Check local links, anchors, image paths, and image alternative text.
 - Require a successful site build on pull requests.
+- Keep external-link checks network-independent and deployment restricted to the default branch.
 
-**Exit:** A broken tutorial is rejected with a file-specific explanation, while a valid tutorial passes without application-code changes.
+**Exit:** A broken tutorial is rejected with a file-specific explanation, while a valid tutorial passes without application-code changes. The completed plan, requirements, and executable validation evidence are recorded in [`2026-09-24-pull-request-content-checks`](../2026-09-24-pull-request-content-checks/).
 
 ## Phase 3: Core visual content
 
