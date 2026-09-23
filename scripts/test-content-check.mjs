@@ -109,8 +109,9 @@ try {
   await mkdir(path.join(validRoot, 'images'), { recursive: true });
   await writeFile(
     path.join(validRoot, 'index.md'),
-    '# Home\n\n## Start here\n\n[Start](#start-here)\n\n[Local][start]\n\n[External][web]\n\n![Diagram](images/diagram.png)\n\n![Remote][remote]\n\n[start]: #start-here\n[web]: https://example.invalid/guide\n[remote]: https://example.invalid/diagram.png\n',
+    '# Home\n\n## Start here\n\n[Start](#start-here)\n\n[Local][start]\n\n[Example](/Example.File/)\n\n[External][web]\n\n![Diagram](images/diagram.png)\n\n![Remote][remote]\n\n[start]: #start-here\n[web]: https://example.invalid/guide\n[remote]: https://example.invalid/diagram.png\n',
   );
+  await writeFile(path.join(validRoot, 'Example.File.md'), '# Example\n');
   await writeFile(path.join(validRoot, 'images/diagram.png'), 'fixture');
   const result = runValidator(validRoot);
   if (result.status !== 0) throw new Error(`valid content was rejected:\n${result.stdout}${result.stderr}`);

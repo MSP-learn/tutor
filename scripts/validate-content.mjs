@@ -3,6 +3,7 @@
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { generateDocsIdFromEntry } from '../src/content/docs-route-id.mjs';
 
 const repositoryRoot = process.cwd();
 const contentRoot = path.resolve(process.env.CONTENT_ROOT ?? path.join(repositoryRoot, 'src/content/docs'));
@@ -40,7 +41,7 @@ function report(filePath, source, offset, message) {
 
 function routeFor(filePath) {
   const relative = path.relative(contentRoot, filePath).split(path.sep).join('/');
-  const withoutExtension = relative.replace(/\.md$/, '');
+  const withoutExtension = generateDocsIdFromEntry(relative);
   if (withoutExtension === 'index') return '/';
   if (withoutExtension.endsWith('/index')) return `/${withoutExtension.slice(0, -'/index'.length)}/`;
   return `/${withoutExtension}/`;

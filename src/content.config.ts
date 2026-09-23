@@ -2,6 +2,7 @@ import { docsLoader } from '@astrojs/starlight/loaders';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
+import { generateDocsIdFromEntry } from './content/docs-route-id.mjs';
 
 const tutorialSchema = (context) =>
   docsSchema()(context).extend({
@@ -13,5 +14,8 @@ const tutorialSchema = (context) =>
   });
 
 export const collections = {
-  docs: defineCollection({ loader: docsLoader(), schema: tutorialSchema }),
+  docs: defineCollection({
+    loader: docsLoader({ generateId: ({ entry }) => generateDocsIdFromEntry(entry) }),
+    schema: tutorialSchema,
+  }),
 };
