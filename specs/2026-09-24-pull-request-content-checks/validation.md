@@ -24,7 +24,7 @@ pnpm lint:markdown
 pnpm test:content
 ```
 
-**Pass:** the executable test reports passing cases for a broken local link, broken anchor, missing image path, missing image alt text, broken reference link, missing reference image path, missing reference image alt text, malformed percent-encoding, valid local references, and missing required frontmatter description. The missing-description build failure must include `phase2-missing-description.md` and `description`.
+**Pass:** the executable test reports passing cases for a broken local link, broken anchor, missing image path, missing image alt text, broken reference link, undefined full/collapsed/shortcut reference links and images, missing reference image path, missing reference image alt text, malformed percent-encoding, valid local references, and missing required frontmatter description. The missing-description build failure must include `phase2-missing-description.md` and `description`.
 
 **Fail:** a case exits successfully when it should fail, fails without the expected file-specific message, exposes a raw decoder exception, or rejects the valid fixture.
 
