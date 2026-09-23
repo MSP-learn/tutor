@@ -2,7 +2,7 @@
 
 ## Scope
 
-Deliver **Phase 1: Deployable documentation shell** from `specs/Constitution/road-map.md`. The result is the smallest useful Tutor site: one statically rendered Markdown tutorial that can be built and published to GitHub Pages. Do not implement Phase 2 or later content validation, visual primitives, search, or contribution tooling beyond what is needed to build and deploy this shell.
+Deliver **Phase 1: Deployable documentation shell** from `specs/Constitution/road-map.md`. The result is the smallest useful Tutor site: one statically rendered Markdown tutorial that can be built and published to GitHub Pages. This Phase 1 shell does not define Phase 2 or later content validation, visual primitives, search, or contribution tooling beyond what is needed to build and deploy the shell; the approved follow-on responsive UI and static global/suggestion search work is permitted by the dated specification linked below.
 
 ## Functional requirements
 
