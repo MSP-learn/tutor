@@ -37,10 +37,10 @@ pnpm build
 pnpm test:code-block
 ```
 
-**Pass:** the check finds the generated TypeScript `<pre data-language="typescript">`
-block, its nested `<code>` element, and styled Shiki token markup. It reports a
-clear failure when the built page is missing or the expected highlighted block is
-not present.
+**Pass:** the check finds a generated TypeScript `<pre>` block containing
+`data-language="typescript"`, its nested `<code>` element, and styled Shiki token
+markup. It reports a clear failure when the built page is missing or the
+expected highlighted block is not present.
 
 ## 5. Pull-request workflow
 
