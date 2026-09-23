@@ -1,0 +1,278 @@
+/* Tutor's visual layer keeps Starlight's semantic shell and progressive enhancement. */
+:root {
+  --tutor-paper: #f7f8f6;
+  --tutor-paper-strong: #eef1ee;
+  --tutor-surface: #ffffff;
+  --tutor-ink: #17211f;
+  --tutor-ink-soft: #4d5d59;
+  --tutor-ink-muted: #778681;
+  --tutor-line: #d9e1dc;
+  --tutor-line-strong: #b8c6bf;
+  --tutor-accent: #d99518;
+  --tutor-accent-soft: #fff4d6;
+  --tutor-shadow: 0 8px 24px rgb(23 33 31 / 6%);
+  --tutor-radius: 8px;
+  --sl-color-accent-low: var(--tutor-accent-soft);
+  --sl-color-accent: var(--tutor-accent);
+  --sl-color-accent-high: #634507;
+  --sl-color-bg: var(--tutor-paper);
+  --sl-color-bg-nav: rgb(247 248 246 / 94%);
+  --sl-color-bg-sidebar: var(--tutor-paper);
+  --sl-color-hairline: var(--tutor-line);
+  --sl-color-hairline-light: #e8ede9;
+  --sl-color-text: var(--tutor-ink-soft);
+  --sl-color-text-accent: var(--tutor-ink);
+  --sl-color-white: var(--tutor-surface);
+  --sl-color-black: var(--tutor-ink);
+  --sl-content-width: 68rem;
+  --sl-sidebar-width: 17rem;
+  --sl-nav-height: 4rem;
+}
+
+html {
+  background: var(--tutor-paper);
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--tutor-paper);
+  color: var(--tutor-ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .32;
+  background-image: linear-gradient(to right, rgb(217 149 24 / 5.5%) 1px, transparent 1px), linear-gradient(to bottom, rgb(217 149 24 / 5.5%) 1px, transparent 1px);
+  background-size: 48px 48px;
+  content: "";
+}
+
+::selection {
+  background: var(--tutor-accent);
+  color: var(--tutor-surface);
+}
+
+:focus-visible {
+  outline: 2px solid var(--tutor-accent);
+  outline-offset: 3px;
+}
+
+.header {
+  border-bottom-color: var(--tutor-line);
+  background: rgb(247 248 246 / 94%);
+  box-shadow: 0 1px 0 rgb(23 33 31 / 2%);
+  backdrop-filter: blur(14px);
+}
+
+.site-title {
+  color: var(--tutor-ink);
+  font-weight: 650;
+  letter-spacing: -.025em;
+}
+
+.sidebar {
+  border-inline-end-color: var(--tutor-line);
+  background: var(--tutor-paper);
+}
+
+.sidebar a[aria-current="page"] {
+  border-radius: 6px;
+  background: var(--tutor-ink);
+  color: var(--tutor-surface);
+  font-weight: 600;
+}
+
+.sidebar a:not([aria-current="page"]):hover,
+.sidebar summary:hover {
+  border-radius: 6px;
+  background: var(--tutor-paper-strong);
+  color: var(--tutor-ink);
+}
+
+.main-pane {
+  min-width: 0;
+}
+
+.content-panel {
+  border-bottom-color: var(--tutor-line);
+}
+
+.sl-container {
+  max-width: var(--sl-content-width);
+}
+
+.sl-markdown-content {
+  color: var(--tutor-ink-soft);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.sl-markdown-content h4 {
+  color: var(--tutor-ink);
+  letter-spacing: -.04em;
+}
+
+.sl-markdown-content h1 {
+  font-size: clamp(2.1rem, 3.4vw, 3.2rem);
+  line-height: 1.05;
+}
+
+.sl-markdown-content h2 {
+  margin-top: 2em;
+}
+
+.sl-markdown-content strong,
+.sl-markdown-content th {
+  color: var(--tutor-ink);
+}
+
+.sl-markdown-content a {
+  color: var(--tutor-ink);
+  text-underline-offset: .18em;
+  text-decoration-thickness: .08em;
+}
+
+.sl-markdown-content a:hover {
+  color: var(--tutor-accent);
+}
+
+.sl-markdown-content :is(code, pre) {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.sl-markdown-content :not(pre) > code {
+  border: 1px solid var(--tutor-line);
+  border-radius: 4px;
+  background: var(--tutor-paper-strong);
+  color: var(--tutor-ink);
+}
+
+.sl-markdown-content pre {
+  border: 1px solid #30343a;
+  border-radius: var(--tutor-radius);
+  box-shadow: var(--tutor-shadow);
+}
+
+.sl-markdown-content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border: 1px solid var(--tutor-line);
+  background: var(--tutor-surface);
+}
+
+.sl-markdown-content :is(th, td) {
+  min-width: 8rem;
+  border-color: var(--tutor-line);
+  padding: .7rem .8rem;
+  text-align: start;
+  vertical-align: top;
+}
+
+.sl-markdown-content th {
+  background: var(--tutor-paper-strong);
+}
+
+.sl-markdown-content blockquote,
+.sl-markdown-content .starlight-aside {
+  border-inline-start-color: var(--tutor-accent);
+  background: var(--tutor-paper-strong);
+}
+
+.right-sidebar-container {
+  border-inline-start-color: var(--tutor-line);
+}
+
+.right-sidebar-panel {
+  border-block-start-color: var(--tutor-line);
+}
+
+/* Starlight's Pagefind UI supplies global search, type-ahead suggestions, snippets, and empty states. */
+.pagefind-ui {
+  --pagefind-ui-scale: 1;
+  --pagefind-ui-primary: var(--tutor-accent);
+  --pagefind-ui-text: var(--tutor-ink);
+  --pagefind-ui-background: var(--tutor-surface);
+  --pagefind-ui-border: var(--tutor-line-strong);
+  --pagefind-ui-tag: var(--tutor-paper-strong);
+  color: var(--tutor-ink-soft);
+  font-family: inherit;
+}
+
+.pagefind-ui__form {
+  border-radius: var(--tutor-radius);
+  box-shadow: none;
+}
+
+.pagefind-ui__search-input {
+  min-height: 2.8rem;
+  border-radius: 6px;
+  background: var(--tutor-surface);
+}
+
+.pagefind-ui__drawer {
+  border-color: var(--tutor-line);
+  border-radius: var(--tutor-radius);
+  box-shadow: var(--tutor-shadow);
+}
+
+.pagefind-ui__result-link,
+.pagefind-ui__result-excerpt {
+  color: var(--tutor-ink-soft);
+}
+
+.pagefind-ui__result-link:hover {
+  color: var(--tutor-ink);
+}
+
+@media (max-width: 50rem) {
+  :root {
+    --sl-nav-height: 3.75rem;
+    --sl-content-width: 100%;
+  }
+
+  .header {
+    position: sticky;
+    top: 0;
+  }
+
+  .sl-markdown-content {
+    font-size: 1.05rem;
+  }
+
+  .sl-markdown-content table {
+    margin-inline: 0;
+  }
+}
+
+@media (max-width: 30rem) {
+  .sl-markdown-content h1 {
+    font-size: 2rem;
+  }
+
+  .sl-markdown-content pre {
+    border-radius: 6px;
+    font-size: .86rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

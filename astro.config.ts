@@ -9,7 +9,8 @@ export default defineConfig({
     starlight({
       title: 'Tutor',
       description: 'Clear, practical tutorials from MSP Learn.',
-      pagefind: false,
+      customCss: ['./src/styles/custom.css'],
+      pagefind: true,
       sidebar: [
         {
           label: 'Tutorials',

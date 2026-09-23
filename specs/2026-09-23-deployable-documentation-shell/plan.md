@@ -38,3 +38,7 @@ Implement only the Phase 1 exit path described in `specs/Constitution/road-map.m
 5. Stop after the Phase 1 exit condition is proven; defer generalized content checks and visual-content infrastructure to later phases.
 
 **Slice result:** local build, focused content/link checks, hosted workflow, and a readable deployed example page all provide evidence for the Phase 1 exit.
+
+## Historical follow-on
+
+This Phase 1 plan remains the historical shell-delivery record. The approved responsive documentation UI and static global/suggestion search are implemented in the new dated specification [`2026-09-23-documentation-experience-search`](../2026-09-23-documentation-experience-search/), not retrofitted into this plan.

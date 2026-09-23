@@ -33,3 +33,7 @@ Validation proves the Phase 1 exit condition without expanding into the later co
 ## Phase 1 pass criteria
 
 Phase 1 passes only when the local production build succeeds, the focused content/link checks pass, the GitHub Actions deployment succeeds, and the deployed example page is readable at the configured GitHub Pages path. Generalized Markdown linting, full link policy, diagrams, callouts, and accessibility/release hardening remain later-phase work.
+
+## Historical follow-on
+
+The Phase 1 checks above remain the original shell acceptance record. The responsive UI, static global/suggestion search, keyboard behavior, and deployed search checks are defined and run under [`2026-09-23-documentation-experience-search`](../2026-09-23-documentation-experience-search/).

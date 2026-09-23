@@ -42,9 +42,13 @@ Deliver **Phase 1: Deployable documentation shell** from `specs/Constitution/roa
 
 After a successful merge to the default branch, GitHub Pages serves a readable example tutorial at the configured `/tutor/` path. A contributor can identify the Markdown source, run the production build locally, and publish the same static output through the workflow without adding application code.
 
+## Historical follow-on
+
+The Phase 1 acceptance context above is preserved. Responsive documentation presentation and approved build-time global/suggestion search are follow-on work defined in [`2026-09-23-documentation-experience-search`](../2026-09-23-documentation-experience-search/).
+
 ## Explicit non-goals
 
 - No complete frontmatter schema or generalized content-validation framework.
 - No Markdown linting, image-alt enforcement, external-link policy, or advanced local-link tooling beyond the checks required to validate this one example.
-- No Mermaid, callout system, image library, search, categories, accounts, comments, runtime service, or browser editor.
+- No Mermaid, callout system, image library, custom search service, categories, accounts, comments, runtime service, or browser editor. Static global and suggestion search is intentionally handled by the later dated documentation-experience specification.
 - No deployment to a host other than GitHub Pages.
