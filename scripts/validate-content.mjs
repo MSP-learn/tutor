@@ -91,6 +91,25 @@ function localTarget(target) {
   return target && !/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(target) && !target.startsWith('#');
 }
 
+function referenceLabel(label) {
+  return label.trim().replace(/\s+/g, ' ').toLowerCase();
+}
+
+function referenceDefinitions(body) {
+  const definitions = new Map();
+  const ranges = [];
+  for (const match of body.matchAll(/^ {0,3}\[([^\]\n]+)\]:[ \t]*(<[^>\n]*>|[^<\s][^\s]*)(?:[ \t]+(?:"[^"]*"|'[^']*'|\([^)]*\)))?[ \t]*$/gm)) {
+    const label = referenceLabel(match[1]);
+    if (!definitions.has(label)) definitions.set(label, { target: match[2], offset: match.index });
+    ranges.push([match.index, match.index + match[0].length]);
+  }
+  return { definitions, ranges };
+}
+
+function withinRanges(offset, ranges) {
+  return ranges.some(([start, end]) => offset >= start && offset < end);
+}
+
 async function checkTarget({ filePath, source, offset, target, kind, route, routes }) {
   const cleanTarget = target.replace(/^<|>$/g, '');
   const [targetPath, fragment = ''] = cleanTarget.split('#', 2);
@@ -107,7 +126,16 @@ async function checkTarget({ filePath, source, offset, target, kind, route, rout
     return;
   }
 
-  const candidates = routeCandidates(targetPath || route, route);
+  let candidates;
+  try {
+    candidates = routeCandidates(targetPath || route, route);
+  } catch (error) {
+    if (error instanceof URIError) {
+      report(filePath, source, offset, `local link target "${cleanTarget}" contains malformed percent-encoding`);
+      return;
+    }
+    throw error;
+  }
   const destination = [...candidates].find((candidate) => routes.has(candidate));
   if (!destination) {
     report(filePath, source, offset, `local link target "${cleanTarget}" does not resolve to a tutorial route`);
@@ -142,9 +170,26 @@ for (const filePath of files) {
 
 for (const document of documents) {
   const { filePath, source, body, bodyStart, route } = document;
+  const { definitions, ranges: definitionRanges } = referenceDefinitions(body);
+  const imageReferenceRanges = [];
   for (const match of body.matchAll(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+[^)]*)?\)/g)) {
     if (!match[1].trim()) report(filePath, source, bodyStart + match.index, 'image field "alt" must not be empty');
     await checkTarget({ filePath, source, offset: bodyStart + match.index, target: match[2], kind: 'image', route, routes });
+  }
+  for (const match of body.matchAll(/!\[([^\]]*)\]\[([^\]]*)\]/g)) {
+    imageReferenceRanges.push([match.index, match.index + match[0].length]);
+    const definition = definitions.get(referenceLabel(match[2] || match[1]));
+    if (!match[1].trim()) report(filePath, source, bodyStart + match.index, 'image field "alt" must not be empty');
+    if (definition) {
+      await checkTarget({ filePath, source, offset: bodyStart + match.index, target: definition.target, kind: 'image', route, routes });
+    }
+  }
+  for (const match of body.matchAll(/!\[([^\]\n]+)\]/g)) {
+    if (withinRanges(match.index, definitionRanges)) continue;
+    if (body[match.index + match[0].length] === '(' || body[match.index + match[0].length] === '[') continue;
+    imageReferenceRanges.push([match.index, match.index + match[0].length]);
+    const definition = definitions.get(referenceLabel(match[1]));
+    if (definition) await checkTarget({ filePath, source, offset: bodyStart + match.index, target: definition.target, kind: 'image', route, routes });
   }
   for (const match of body.matchAll(/<img\b([^>]*?)>/gi)) {
     const attributes = match[1];
@@ -155,6 +200,13 @@ for (const document of documents) {
   }
   for (const match of body.matchAll(/(?<!!)(?:\[[^\]]*\])\(([^)\s]+)(?:\s+[^)]*)?\)/g)) {
     await checkTarget({ filePath, source, offset: bodyStart + match.index, target: match[1], kind: 'link', route, routes });
+  }
+  for (const match of body.matchAll(/(?<!!)\[([^\]\n]+)\](?:\[([^\]]*)\])?/g)) {
+    if (withinRanges(match.index, definitionRanges)) continue;
+    if (withinRanges(match.index, imageReferenceRanges)) continue;
+    if (match[2] === undefined && body[match.index + match[0].length] === '(') continue;
+    const definition = definitions.get(referenceLabel(match[2] ?? match[1]));
+    if (definition) await checkTarget({ filePath, source, offset: bodyStart + match.index, target: definition.target, kind: 'link', route, routes });
   }
 }
 

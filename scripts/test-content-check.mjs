@@ -29,6 +29,27 @@ const cases = [
     files: { 'index.md': '# Home\n\n![](images/diagram.png)\n', 'images/diagram.png': '' },
     message: 'image field "alt"',
   },
+  {
+    name: 'broken reference link',
+    files: { 'index.md': '# Home\n\n[Missing][bad]\n\n[bad]: missing-page/\n' },
+    message: 'local link target "missing-page/"',
+  },
+  {
+    name: 'missing reference image path',
+    files: { 'index.md': '# Home\n\n![Diagram][img]\n\n[img]: images/missing.png\n' },
+    message: 'local image path "images/missing.png"',
+  },
+  {
+    name: 'missing reference image alt text',
+    files: { 'index.md': '# Home\n\n![][img]\n\n[img]: images/diagram.png\n', 'images/diagram.png': '' },
+    message: 'image field "alt"',
+  },
+  {
+    name: 'malformed percent-encoded local link',
+    files: { 'index.md': '# Home\n\n[Bad](%zz)\n' },
+    message: 'malformed percent-encoding',
+    excludedMessage: 'URIError',
+  },
 ];
 
 function runValidator(contentRoot) {
@@ -49,7 +70,7 @@ for (const testCase of cases) {
     }
     const result = runValidator(contentRoot);
     const output = `${result.stdout}${result.stderr}`;
-    if (result.status === 0 || !output.includes(testCase.message)) {
+    if (result.status === 0 || !output.includes(testCase.message) || (testCase.excludedMessage && output.includes(testCase.excludedMessage))) {
       throw new Error(`${testCase.name} did not produce the expected file-specific error:\n${output}`);
     }
     console.log(`PASS ${testCase.name}: ${testCase.message}`);
@@ -61,7 +82,10 @@ for (const testCase of cases) {
 const validRoot = await mkdtemp(path.join(os.tmpdir(), 'tutor-content-check-valid-'));
 try {
   await mkdir(path.join(validRoot, 'images'), { recursive: true });
-  await writeFile(path.join(validRoot, 'index.md'), '# Home\n\n## Start here\n\n[Start](#start-here)\n\n![Diagram](images/diagram.png)\n');
+  await writeFile(
+    path.join(validRoot, 'index.md'),
+    '# Home\n\n## Start here\n\n[Start](#start-here)\n\n[Local][start]\n\n[External][web]\n\n![Diagram](images/diagram.png)\n\n![Remote][remote]\n\n[start]: #start-here\n[web]: https://example.invalid/guide\n[remote]: https://example.invalid/diagram.png\n',
+  );
   await writeFile(path.join(validRoot, 'images/diagram.png'), 'fixture');
   const result = runValidator(validRoot);
   if (result.status !== 0) throw new Error(`valid content was rejected:\n${result.stdout}${result.stderr}`);
