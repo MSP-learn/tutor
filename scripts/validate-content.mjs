@@ -79,7 +79,8 @@ function removeCodeAndComments(source) {
   return source
     .replace(/<!--[\s\S]*?-->/g, '')
     .replace(/^```[\s\S]*?^```\s*$/gm, (block) => block.replace(/[^\n]/g, ' '))
-    .replace(/^~~~[\s\S]*?^~~~\s*$/gm, (block) => block.replace(/[^\n]/g, ' '));
+    .replace(/^~~~[\s\S]*?^~~~\s*$/gm, (block) => block.replace(/[^\n]/g, ' '))
+    .replace(/^ {0,3}:::[^\n]*$/gm, (directive) => directive.replace(/[^\n]/g, ' '));
 }
 
 function frontmatterEnd(source) {
