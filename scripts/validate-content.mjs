@@ -216,7 +216,7 @@ for (const document of documents) {
     if (withinRanges(match.index, imageReferenceRanges)) continue;
     if (match[2] === undefined && body[match.index + match[0].length] === '(') continue;
     if (match[2] === undefined) {
-      const definition = definitions.get(referenceLabel(match[1]));
+      const definition = checkReferenceDefinition({ filePath, source, offset: bodyStart + match.index, definitions, label: match[1], kind: 'link' });
       if (definition) await checkTarget({ filePath, source, offset: bodyStart + match.index, target: definition.target, kind: 'link', route, routes });
       continue;
     }

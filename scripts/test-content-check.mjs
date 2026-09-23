@@ -45,6 +45,11 @@ const cases = [
     message: 'link reference definition "Missing" does not exist',
   },
   {
+    name: 'undefined shortcut reference link',
+    files: { 'index.md': '# Home\n\n[Missing]\n' },
+    message: 'link reference definition "Missing" does not exist',
+  },
+  {
     name: 'missing reference image path',
     files: { 'index.md': '# Home\n\n![Diagram][img]\n\n[img]: images/missing.png\n' },
     message: 'local image path "images/missing.png"',
