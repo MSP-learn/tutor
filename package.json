@@ -1,0 +1,27 @@
+{
+  "name": "tutor",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.15.1",
+  "engines": {
+    "node": ">=22.12.0 <23"
+  },
+  "scripts": {
+    "build": "astro build",
+    "check:content": "node scripts/validate-content.mjs",
+    "test:content": "node scripts/test-content-check.mjs",
+    "test:code-block": "node scripts/test-code-block.mjs",
+    "lint:markdown": "markdownlint-cli2 \"src/**/*.md\"",
+    "dev": "astro dev",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "0.42.3",
+    "astro": "7.3.4"
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "0.18.1",
+    "typescript": "5.9.3"
+  }
+}
