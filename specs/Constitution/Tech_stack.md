@@ -16,7 +16,7 @@ The initial stack should stay small enough to deploy after the first valid tutor
 | Content | Standard Markdown plus YAML frontmatter | Keeps tutorials portable, reviewable, and easy to author. |
 | Search | Starlight built-in Pagefind | Generates static search assets at build time without a server or custom index. |
 | Code rendering | Shiki through Astro/Starlight | Build-time syntax highlighting without a client-side highlighter. |
-| Callouts | Starlight asides or a documented Markdown directive | Supports consistent notes, tips, cautions, and warnings. |
+| Callouts | Starlight native Markdown asides | Supports consistent notes, tips, cautions, and warnings without custom rendering. |
 | Diagrams and workflows | Mermaid, rendered safely from fenced blocks | Covers flowcharts, sequence diagrams, state diagrams, timelines, and related tutorial visuals. |
 | Images | Repository-managed assets with Astro image processing where applicable | Keeps images versioned, optimized, and reviewable with their tutorials. |
 | Hosting | GitHub Pages | Matches the repository-based publishing model and requires no application server. |
