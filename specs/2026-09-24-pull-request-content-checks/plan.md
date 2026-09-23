@@ -21,9 +21,10 @@ Phase 1 established the Astro/Starlight documentation shell, the `/tutor/` GitHu
 
 1. Treat the Markdown file path under `src/content/docs` as the canonical route identity: `index.md` maps to `/`, a directory `index.md` maps to that directory route, and another Markdown file maps to its path without `.md`.
 2. Reject duplicate generated routes with both source file paths in the diagnostic.
-3. Check local Markdown links against generated tutorial routes and heading/explicit anchors.
-4. Check local image paths against the source document or `public/` and require non-empty alt text for Markdown images and HTML `<img>` elements.
+3. Check inline and reference-style local Markdown links against generated tutorial routes and heading/explicit anchors.
+4. Check inline and reference-style local image paths against the source document or `public/` and require non-empty alt text for Markdown images and HTML `<img>` elements.
 5. Leave absolute URLs, protocol-relative URLs, and other external links network-independent: they are not fetched by local validation.
+6. Report malformed percent-encoding through the same source-file diagnostic path as other local target failures.
 
 **Decision:** File path is canonical route identity. Link and image validation is repository-local and deterministic.
 
@@ -40,7 +41,7 @@ Phase 1 established the Astro/Starlight documentation shell, the `/tutor/` GitHu
 
 1. Run the local commands from the validation specification on Node.js 22 and the committed pnpm lockfile.
 2. Confirm the current valid tutorial passes all content checks and the static build.
-3. Confirm the content test covers broken local links, anchors, image paths, empty alt text, and missing required frontmatter with source-file/field diagnostics.
+3. Confirm the content test covers broken local links, anchors, image paths, empty alt text, reference-style targets, malformed percent-encoding, and missing required frontmatter with source-file/field diagnostics.
 4. Report command results and retain the check names as the pull-request contract.
 
 ## Non-goals

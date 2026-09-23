@@ -26,9 +26,11 @@ Phase 2 is complete when a pull request runs frozen-lockfile installation, Markd
 ### R3. File-specific local content validation
 
 - Local Markdown links must resolve to a generated tutorial route.
+- Inline, full reference, collapsed reference, and shortcut reference Markdown links and images are subject to the same local-target checks.
 - Fragment links must resolve to a heading slug or explicit HTML `id` anchor in the target document.
 - Local image paths must resolve relative to the Markdown file or from `public/` for root paths.
 - Markdown image alt text and HTML `<img>` alt attributes must be present and non-empty.
+- Malformed percent-encoding in a local link target must be reported as a file-specific validation error rather than a raw decoder exception.
 - Diagnostics must identify the repository-relative source file, line where available, and concrete failing target, anchor, image path, or `alt` field.
 - Absolute URLs and protocol-relative URLs are external references and must not be fetched; external-link checks are network-independent and do not fail because a network is unavailable.
 
@@ -56,4 +58,4 @@ Phase 2 is complete when a pull request runs frozen-lockfile installation, Markd
 
 ## Acceptance evidence
 
-The requirements pass when the local commands in `validation.md` succeed on the current valid content and the pull-request workflow contains each required command, while the existing content test demonstrates file-specific failures for missing links, anchors, image paths, alt text, and required description frontmatter.
+The requirements pass when the local commands in `validation.md` succeed on the current valid content and the pull-request workflow contains each required command, while the existing content test demonstrates file-specific failures for missing links, anchors, image paths, alt text, reference-style targets, malformed percent-encoding, and required description frontmatter.

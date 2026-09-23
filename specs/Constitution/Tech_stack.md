@@ -14,6 +14,7 @@ The initial stack should stay small enough to deploy after the first valid tutor
 | Runtime | Node.js 22 LTS | Stable build runtime with broad tooling support. |
 | Package manager | pnpm with a committed lockfile | Reproducible installs and efficient dependency management. |
 | Content | Standard Markdown plus YAML frontmatter | Keeps tutorials portable, reviewable, and easy to author. |
+| Search | Starlight built-in Pagefind | Generates static search assets at build time without a server or custom index. |
 | Code rendering | Shiki through Astro/Starlight | Build-time syntax highlighting without a client-side highlighter. |
 | Callouts | Starlight asides or a documented Markdown directive | Supports consistent notes, tips, cautions, and warnings. |
 | Diagrams and workflows | Mermaid, rendered safely from fenced blocks | Covers flowcharts, sequence diagrams, state diagrams, timelines, and related tutorial visuals. |
@@ -24,7 +25,7 @@ The initial stack should stay small enough to deploy after the first valid tutor
 ## Content contract
 
 Each tutorial should be a Markdown file with a small required frontmatter schema.
-The first schema should contain only fields needed for rendering and navigation, such as `title`, `description`, and `order` or `category`.
+The Phase 2 schema requires only non-empty `title` and `description`; the Markdown file path under `src/content/docs` is the canonical route identity.
 Optional fields may include authorship, last-reviewed date, tags, and source references after their behavior is defined.
 
 Raw HTML should be disabled by default.
@@ -37,11 +38,11 @@ Start with checks that produce direct, file-specific feedback:
 1. Install dependencies from the lockfile.
 2. Validate required frontmatter and unique content routes.
 3. Lint Markdown with `markdownlint-cli2` or an equivalent maintained tool.
-4. verify local links, anchors, referenced images, and image alternative text.
+4. Verify local inline and reference-style links, anchors, referenced images, and image alternative text.
 5. Build the complete Astro site.
 6. Run a small rendered-page smoke test and accessibility check once the site shell exists.
 
-External-link checking should report transient network failures clearly and should not make content publishing unreliable without a deliberate policy.
+External links are not fetched by the repository-local content checker; any future network-dependent external-link policy must be deliberate and isolated from the deterministic pull-request checks.
 
 ## Deployment
 
@@ -63,7 +64,7 @@ The workflow must set the correct Pages base path for `MSP-learn/tutor` and use 
 - Avoid MDX until a real tutorial requires controlled components that standard Markdown cannot express.
 - Prefer build-time rendering over shipping client-side JavaScript.
 - Pin action versions and application dependencies, and update them through reviewed pull requests.
-- Add search only after the basic content and navigation path is stable.
+- Keep search static and generated with the documentation build unless a future requirement proves that a runtime search service is necessary.
 
 ## Revisit points
 

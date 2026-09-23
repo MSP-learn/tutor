@@ -24,9 +24,9 @@ pnpm lint:markdown
 pnpm test:content
 ```
 
-**Pass:** the executable test reports passing cases for a broken local link, broken anchor, missing image path, missing image alt text, valid local references, and missing required frontmatter description. The missing-description build failure must include `__phase2-missing-description.md` and `description`.
+**Pass:** the executable test reports passing cases for a broken local link, broken anchor, missing image path, missing image alt text, broken reference link, missing reference image path, missing reference image alt text, malformed percent-encoding, valid local references, and missing required frontmatter description. The missing-description build failure must include `phase2-missing-description.md` and `description`.
 
-**Fail:** a case exits successfully when it should fail, fails without the expected file-specific message, or rejects the valid fixture.
+**Fail:** a case exits successfully when it should fail, fails without the expected file-specific message, exposes a raw decoder exception, or rejects the valid fixture.
 
 ## 4. Local content validation
 
@@ -34,7 +34,7 @@ pnpm test:content
 pnpm check:content
 ```
 
-**Pass:** all Markdown files under `src/content/docs` pass route, local link, fragment-anchor, local image-path, and image-alt checks. External links are ignored for network access and therefore do not make this command dependent on the network.
+**Pass:** all Markdown files under `src/content/docs` pass route, local inline/reference-style link, fragment-anchor, local image-path, and image-alt checks. External links are ignored for network access and therefore do not make this command dependent on the network.
 
 **Fail:** the command exits non-zero and prints a repository-relative file plus line and a concrete target/anchor/image/alt error. Duplicate generated routes must name both conflicting files.
 
@@ -64,7 +64,7 @@ The pull-request workflow must execute these commands after checkout and setup, 
 
 ## Executable pass/fail summary
 
-Phase 2 passes only if all five local commands exit 0 on valid repository content, `pnpm test:content` proves each invalid fixture fails with file-specific evidence, and the workflow inspection confirms the same checks run for pull requests while deployment remains default-branch-only. Any non-zero command, missing diagnostic, network-dependent external-link check, or unintended deployment trigger is a failure.
+Phase 2 passes only if all five local commands exit 0 on valid repository content, `pnpm test:content` proves each invalid fixture fails with file-specific evidence, and the workflow inspection confirms the same checks run for pull requests while deployment remains default-branch-only. Any non-zero command, missing diagnostic, raw malformed-URI exception, network-dependent external-link check, or unintended deployment trigger is a failure.
 
 ## Non-goals verified by inspection
 
