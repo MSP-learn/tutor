@@ -15,7 +15,7 @@ try {
 }
 
 const html = await readFile(renderedPage, 'utf8');
-const codeBlock = html.match(/<pre data-language="typescript">([\s\S]*?)<\/pre>/);
+const codeBlock = html.match(/<pre\b(?=[^>]*\bdata-language="typescript")[^>]*>[\s\S]*?<\/pre>/);
 
 if (!codeBlock) {
   throw new Error('Expected the tutorial build to contain a TypeScript code block.');
