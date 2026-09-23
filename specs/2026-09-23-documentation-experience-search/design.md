@@ -11,7 +11,7 @@ The custom stylesheet defines Tutor-specific tokens and maps them to Starlight's
 - Surfaces: warm paper `#f7f8f6`, stronger paper `#eef1ee`, and white content surfaces.
 - Text: dark ink `#17211f`, soft ink `#4d5d59`, and muted ink `#778681`.
 - Structure: thin neutral borders, modest `8px` radii, and a low-contrast `0 8px 24px` shadow.
-- Accent: amber `#d99518` with a pale amber focus/aside surface.
+- Accent: decorative amber `#d99518` with a pale amber surface, plus darker interactive amber `#7a5200` for link hover, focus outlines, and search controls.
 - Layout: a readable `68rem` content width, a `17rem` desktop sidebar, and a `4rem` sticky navigation bar.
 - Typography: system UI body text, tight display heading tracking, and a system monospace stack for code.
 
@@ -35,7 +35,7 @@ Breakpoints change layout rather than content. There is no hover-only navigation
 
 ## Keyboard and accessibility
 
-Starlight's skip link, landmarks, sidebar controls, focus management, and Pagefind search controls remain in use. The custom layer adds a high-contrast `:focus-visible` outline and does not remove outlines. Search is labeled by the built-in UI, supports keyboard type-ahead selection, exposes results and no-results messaging, and links to generated pages. Reduced-motion preferences disable decorative scrolling, transitions, and animation. Color is never the sole indicator of the active navigation item.
+Starlight's skip link, landmarks, sidebar controls, focus management, and Pagefind search controls remain in use. The custom layer adds a high-contrast `:focus-visible` outline using the darker interactive accent and does not remove outlines. Search is labeled by the built-in UI, supports keyboard type-ahead selection, exposes results and no-results messaging, and links to generated pages. Reduced-motion preferences disable decorative scrolling, transitions, and animation. Color is never the sole indicator of the active navigation item.
 
 ## Global and suggestion search
 

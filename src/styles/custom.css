@@ -9,11 +9,12 @@
   --tutor-line: #d9e1dc;
   --tutor-line-strong: #b8c6bf;
   --tutor-accent: #d99518;
+  --tutor-accent-interactive: #7a5200;
   --tutor-accent-soft: #fff4d6;
   --tutor-shadow: 0 8px 24px rgb(23 33 31 / 6%);
   --tutor-radius: 8px;
   --sl-color-accent-low: var(--tutor-accent-soft);
-  --sl-color-accent: var(--tutor-accent);
+  --sl-color-accent: var(--tutor-accent-interactive);
   --sl-color-accent-high: #634507;
   --sl-color-bg: var(--tutor-paper);
   --sl-color-bg-nav: rgb(247 248 246 / 94%);
@@ -54,12 +55,12 @@ body::before {
 }
 
 ::selection {
-  background: var(--tutor-accent);
+  background: var(--tutor-accent-interactive);
   color: var(--tutor-surface);
 }
 
 :focus-visible {
-  outline: 2px solid var(--tutor-accent);
+  outline: 2px solid var(--tutor-accent-interactive);
   outline-offset: 3px;
 }
 
@@ -142,7 +143,7 @@ body::before {
 }
 
 .sl-markdown-content a:hover {
-  color: var(--tutor-accent);
+  color: var(--tutor-accent-interactive);
 }
 
 .sl-markdown-content :is(code, pre) {
@@ -200,7 +201,7 @@ body::before {
 /* Starlight's Pagefind UI supplies global search, type-ahead suggestions, snippets, and empty states. */
 .pagefind-ui {
   --pagefind-ui-scale: 1;
-  --pagefind-ui-primary: var(--tutor-accent);
+  --pagefind-ui-primary: var(--tutor-accent-interactive);
   --pagefind-ui-text: var(--tutor-ink);
   --pagefind-ui-background: var(--tutor-surface);
   --pagefind-ui-border: var(--tutor-line-strong);
