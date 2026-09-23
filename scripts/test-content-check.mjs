@@ -35,9 +35,29 @@ const cases = [
     message: 'local link target "missing-page/"',
   },
   {
+    name: 'undefined reference link',
+    files: { 'index.md': '# Home\n\n[Missing][bad]\n' },
+    message: 'link reference definition "bad" does not exist',
+  },
+  {
+    name: 'undefined collapsed reference link',
+    files: { 'index.md': '# Home\n\n[Missing][]\n' },
+    message: 'link reference definition "Missing" does not exist',
+  },
+  {
     name: 'missing reference image path',
     files: { 'index.md': '# Home\n\n![Diagram][img]\n\n[img]: images/missing.png\n' },
     message: 'local image path "images/missing.png"',
+  },
+  {
+    name: 'undefined reference image',
+    files: { 'index.md': '# Home\n\n![Diagram][img]\n' },
+    message: 'image reference definition "img" does not exist',
+  },
+  {
+    name: 'undefined shortcut reference image',
+    files: { 'index.md': '# Home\n\n![Diagram]\n' },
+    message: 'image reference definition "Diagram" does not exist',
   },
   {
     name: 'missing reference image alt text',

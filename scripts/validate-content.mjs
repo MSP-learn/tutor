@@ -110,6 +110,15 @@ function withinRanges(offset, ranges) {
   return ranges.some(([start, end]) => offset >= start && offset < end);
 }
 
+function checkReferenceDefinition({ filePath, source, offset, definitions, label, kind }) {
+  const normalizedLabel = referenceLabel(label);
+  const definition = definitions.get(normalizedLabel);
+  if (!definition) {
+    report(filePath, source, offset, `${kind} reference definition "${label}" does not exist`);
+  }
+  return definition;
+}
+
 async function checkTarget({ filePath, source, offset, target, kind, route, routes }) {
   const cleanTarget = target.replace(/^<|>$/g, '');
   const [targetPath, fragment = ''] = cleanTarget.split('#', 2);
@@ -178,7 +187,8 @@ for (const document of documents) {
   }
   for (const match of body.matchAll(/!\[([^\]]*)\]\[([^\]]*)\]/g)) {
     imageReferenceRanges.push([match.index, match.index + match[0].length]);
-    const definition = definitions.get(referenceLabel(match[2] || match[1]));
+    const label = match[2] || match[1];
+    const definition = checkReferenceDefinition({ filePath, source, offset: bodyStart + match.index, definitions, label, kind: 'image' });
     if (!match[1].trim()) report(filePath, source, bodyStart + match.index, 'image field "alt" must not be empty');
     if (definition) {
       await checkTarget({ filePath, source, offset: bodyStart + match.index, target: definition.target, kind: 'image', route, routes });
@@ -188,7 +198,7 @@ for (const document of documents) {
     if (withinRanges(match.index, definitionRanges)) continue;
     if (body[match.index + match[0].length] === '(' || body[match.index + match[0].length] === '[') continue;
     imageReferenceRanges.push([match.index, match.index + match[0].length]);
-    const definition = definitions.get(referenceLabel(match[1]));
+    const definition = checkReferenceDefinition({ filePath, source, offset: bodyStart + match.index, definitions, label: match[1], kind: 'image' });
     if (definition) await checkTarget({ filePath, source, offset: bodyStart + match.index, target: definition.target, kind: 'image', route, routes });
   }
   for (const match of body.matchAll(/<img\b([^>]*?)>/gi)) {
@@ -205,7 +215,13 @@ for (const document of documents) {
     if (withinRanges(match.index, definitionRanges)) continue;
     if (withinRanges(match.index, imageReferenceRanges)) continue;
     if (match[2] === undefined && body[match.index + match[0].length] === '(') continue;
-    const definition = definitions.get(referenceLabel(match[2] ?? match[1]));
+    if (match[2] === undefined) {
+      const definition = definitions.get(referenceLabel(match[1]));
+      if (definition) await checkTarget({ filePath, source, offset: bodyStart + match.index, target: definition.target, kind: 'link', route, routes });
+      continue;
+    }
+    const label = match[2] || match[1];
+    const definition = checkReferenceDefinition({ filePath, source, offset: bodyStart + match.index, definitions, label, kind: 'link' });
     if (definition) await checkTarget({ filePath, source, offset: bodyStart + match.index, target: definition.target, kind: 'link', route, routes });
   }
 }
