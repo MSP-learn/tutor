@@ -11,6 +11,7 @@
     "build": "astro build",
     "check:content": "node scripts/validate-content.mjs",
     "test:content": "node scripts/test-content-check.mjs",
+    "test:code-block": "node scripts/test-code-block.mjs",
     "lint:markdown": "markdownlint-cli2 \"src/**/*.md\"",
     "dev": "astro dev",
     "preview": "astro preview"

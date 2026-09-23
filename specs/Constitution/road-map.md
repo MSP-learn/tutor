@@ -41,7 +41,7 @@ Each phase should end with a usable result, focused tests, and updated contribut
 
 **Goal:** Support the most common tutorial presentation needs.
 
-- Confirm syntax-highlighted code blocks.
+- Confirm syntax-highlighted code blocks — complete. See [`2026-09-24-syntax-highlighted-code-blocks`](../2026-09-24-syntax-highlighted-code-blocks/).
 - Document callout syntax for notes, tips, cautions, and warnings.
 - Support responsive images with required alternative text.
 - Add a reference example for hyperlinks and citations.

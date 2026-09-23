@@ -31,3 +31,5 @@ jobs:
         run: pnpm check:content
       - name: Build the site
         run: pnpm build
+      - name: Verify highlighted code blocks
+        run: pnpm test:code-block
