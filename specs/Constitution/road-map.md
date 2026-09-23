@@ -20,9 +20,10 @@ Each phase should end with a usable result, focused tests, and updated contribut
 - Create the Astro and Starlight project.
 - Configure the GitHub Pages site path.
 - Add one small example tutorial.
+- Add the approved responsive documentation presentation and built-in static search once the shell page is discoverable.
 - Add a production build and Pages deployment workflow.
 
-**Exit:** A merge to the default branch publishes a readable example page to GitHub Pages.
+**Exit:** A merge to the default branch publishes a readable, searchable example page to GitHub Pages.
 
 ## Phase 2: Pull-request content checks
 
@@ -63,10 +64,9 @@ Each phase should end with a usable result, focused tests, and updated contribut
 
 - Generate navigation from content metadata.
 - Add categories or tags only as needed by real content.
-- Add built-in static search.
 - Add previous, next, and related-page links where useful.
 
-**Exit:** Readers can find and move between tutorials without knowing repository paths.
+**Exit:** Readers can browse growing tutorial collections by metadata and move between tutorials without knowing repository paths.
 
 ## Phase 6: Contribution experience
 
